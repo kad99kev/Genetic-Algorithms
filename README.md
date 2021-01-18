@@ -1,4 +1,4 @@
-# Genetic-Alogrithms
+# Genetic-Algorithms
 
 ### Purpose
 * This repository was initially created to learn about Genetic Algorithms back when I was in the Second Year (2018-2019).
