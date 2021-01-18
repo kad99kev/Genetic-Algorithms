@@ -5,7 +5,7 @@
 
 * However, since then I've worked on different projects that use GA and as a result, this has remained underdeveloped.
 
-* So instead I shall link all my projects that make use of GAs upto some extent, along with some references that I found useful while I was working on it
+* So instead I shall link all my projects that make use of GAs upto some extent, maybe adding to it in the future too.
 
 ### Projects
 1. [PyBoxCar](https://github.com/kad99kev/PyBoxCar) - A BoxCar2D implementation in Python
