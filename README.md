@@ -1,7 +1,7 @@
 # Genetic-Algorithms
 
 ### Purpose
-* This repository was initially created to learn about Genetic Algorithms back when I was in the Second Year (2018-2019).
+* This repository was initially created to learn about Genetic Algorithms back when I was in my Second Year (2018-2019) of Engineering.
 
 * However, since then I've worked on different projects that use GA and as a result, this has remained underdeveloped.
 
