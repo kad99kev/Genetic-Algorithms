@@ -2,11 +2,18 @@ from ga import GeneticAlgorithm
 
 
 def fitness_characters(target, input_chromo):
+    """
+    Fitness Function for character example.
+
+    Arguments:
+        target: Our target phrase.
+        input_chromo: The current chromosome under evaluation.
+    """
     score = 0
     for i in range(len(target)):
         if target[i] == input_chromo[i]:
             score += 1
-    return score
+    return score / len(target)  # Return percentage score.
 
 
 if __name__ == "__main__":
