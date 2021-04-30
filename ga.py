@@ -26,3 +26,7 @@ class GeneticAlgorithm:
         for _ in range(population_size):
             chromo = [random.choice(self.search_space) for __ in range(chromosome_size)]
             self.population.append(chromo)
+
+    def perform_selection(self):
+        # Implement simple roulette wheel selection
+        pass
