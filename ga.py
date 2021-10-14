@@ -1,5 +1,4 @@
 import random
-from typing import List, Callable
 
 
 class GeneticAlgorithm:
@@ -10,10 +9,10 @@ class GeneticAlgorithm:
         search_space: The space of all the possible solutions.
     """
 
-    def __init__(self, search_space: List, fitness_function: Callable):
+    def __init__(self, search_space):
         self.search_space = search_space
 
-    def initialize_population(self, population_size: int, chromosome_size: int):
+    def initialize_population(self, population_size, chromosome_size):
         """
         Function to initialize the population with a given population size and a chromosome length.
 
@@ -27,6 +26,83 @@ class GeneticAlgorithm:
             chromo = [random.choice(self.search_space) for __ in range(chromosome_size)]
             self.population.append(chromo)
 
-    def perform_selection(self):
-        # Implement simple roulette wheel selection
-        pass
+    def _fitness_function(self, input_chromo):
+        """
+        Fitness Function for character example.
+
+        Arguments:
+            target: Our target phrase.
+            input_chromo: The current chromosome under evaluation.
+        """
+        score = 0
+        for i in range(len(self.target)):
+            if self.target[i] == input_chromo[i]:
+                score += 1
+        return score / len(self.target)  # Return percentage score.
+
+    def _roulette_wheel_selection(self):
+        # Calculate the fitness for each chromosome in the population.
+        self.population_fitness = [
+            self._fitness_function(chromo) for chromo in self.population
+        ]
+
+        # Calculate the probability for each chromosome.
+        probabilities = [
+            chromo_fitness / sum(self.population_fitness)
+            for chromo_fitness in self.population_fitness
+        ]
+
+        # Return a chromosome based on its probability.
+        return random.choices(self.population, weights=probabilities)[0]
+
+    def _reproduce(self, parent_1, parent_2):
+        child = ""
+        midpoint = int(
+            random.randrange(len(parent_1))
+        )  # Calculate the midpoint for crossover
+        for i in range(len(parent_1)):
+            if i <= midpoint:
+                child += parent_1[i]
+            else:
+                child += parent_2[i]
+
+        # TODO: perform mutation
+
+        return child
+
+    def _evolve(self):
+        new_population = []  # Our new (and evolved) population.
+        for _ in range(len(self.population)):
+            # Using roulette wheel selection pick out two parents.
+            parent_1 = self._roulette_wheel_selection()
+            parent_2 = self._roulette_wheel_selection()
+            # Create a new child and add it to the new population.
+            child = self._reproduce(parent_1, parent_2)
+            new_population.append(child)
+        self.population = new_population
+
+    def _evaluate(self):
+
+        # If algorithm has not run yet.
+        if not hasattr(self, "population_fitness"):
+            return False
+
+        # Argument sort based on fitness.
+        # Reference: https://stackoverflow.com/questions/3382352/equivalent-of-numpy-argsort-in-basic-python
+        fitness_idx = sorted(
+            range(len(self.population_fitness)),
+            key=self.population_fitness.__getitem__,
+            reverse=True,
+        )
+
+        # We check if the chromosome with the highest fitness is a match.
+        if self.population[fitness_idx[0]] == self.target:
+            return True
+
+        return False
+
+    def run(self, target):
+        self.target = target
+        while not self._evaluate():
+            self._evolve()
+        print("Done")
