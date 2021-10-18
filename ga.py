@@ -41,6 +41,9 @@ class GeneticAlgorithm:
         return score / len(self.target)  # Return percentage score.
 
     def _roulette_wheel_selection(self):
+        """
+        Roulette Wheel Selection algorithm.
+        """
         # Calculate the fitness for each chromosome in the population.
         self.population_fitness = [
             self._fitness_function(chromo) for chromo in self.population
@@ -101,8 +104,16 @@ class GeneticAlgorithm:
 
         return False
 
-    def run(self, target):
+    def _debug(self, step=1):
+        self.steps = 1
+        if self.steps % step == 0:
+            print(self.population)
+        self.steps += 1
+
+    def run(self, target, step=None):
         self.target = target
         while not self._evaluate():
             self._evolve()
+            if step is not None:
+                self._debug(step)
         print("Done")
