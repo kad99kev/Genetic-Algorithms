@@ -59,18 +59,22 @@ class GeneticAlgorithm:
         return random.choices(self.population, weights=probabilities)[0]
 
     def _reproduce(self, parent_1, parent_2):
-        child = ""
+        """
+        Performs crossover with two parents.
+
+        Arguments:
+            parent_1: The first parent.
+            parent_2: The second parent.
+        """
+        child = ""  # Initialise and empty child.
         midpoint = int(
-            random.randrange(len(parent_1))
+            random.randrange(len(self.target))
         )  # Calculate the midpoint for crossover
         for i in range(len(parent_1)):
             if i <= midpoint:
                 child += parent_1[i]
             else:
                 child += parent_2[i]
-
-        # TODO: perform mutation
-
         return child
 
     def _evolve(self):
@@ -81,6 +85,7 @@ class GeneticAlgorithm:
             parent_2 = self._roulette_wheel_selection()
             # Create a new child and add it to the new population.
             child = self._reproduce(parent_1, parent_2)
+            # TODO: perform mutation
             new_population.append(child)
         self.population = new_population
 
