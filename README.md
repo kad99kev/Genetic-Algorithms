@@ -7,6 +7,8 @@
 
 * So instead I shall link all my projects that make use of GAs upto some extent, maybe adding to it in the future too.
 
+* Note, my code here might seem incomplete. This is due to the fact that I am rewriting my old code to make it much more structured. I am also planning to write an article along with this (maybe end of December?).
+
 ### Projects
 1. [PyBoxCar](https://github.com/kad99kev/PyBoxCar) - A BoxCar2D implementation in Python
 2. [NeuroSteer](https://github.com/kad99kev/NeuroSteer) - Neuro-evolution in steering of autonomous agents using tensorflow.js
