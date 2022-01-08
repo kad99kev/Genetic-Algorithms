@@ -7,22 +7,24 @@ class GeneticAlgorithm:
 
     Arguments:
         search_space: The space of all the possible solutions.
+        population_size: Size of the population.
     """
 
-    def __init__(self, search_space):
+    def __init__(self, search_space, population_size=100, mutation_rate=0.01):
         self.search_space = search_space
+        self.population_size = population_size
+        self.mutation_rate = mutation_rate
 
-    def initialize_population(self, population_size, chromosome_size):
+    def initialize_population(self, chromosome_size):
         """
         Function to initialize the population with a given population size and a chromosome length.
 
         Arguments:
-            population_size: Size of the population.
             chromosome_size: Size of the chromosome (the length of the target chromosome).
         """
 
         self.population = []  # This will be our population attribute for the class
-        for _ in range(population_size):
+        for _ in range(self.population_size):
             chromo = [random.choice(self.search_space) for __ in range(chromosome_size)]
             self.population.append(chromo)
 
@@ -77,6 +79,19 @@ class GeneticAlgorithm:
                 child += parent_2[i]
         return child
 
+    def _mutate(self, child):
+        """
+        Performs mutation.
+
+        Arguments:
+            child: The child to be mutated.
+        """
+        child_list = list(child)
+        for idx in range(len(child)):
+            if random.random() < self.mutation_rate:
+                child_list[idx] = random.choice(self.search_space)
+        return "".join(child_list)
+
     def _evolve(self):
         new_population = []  # Our new (and evolved) population.
         for _ in range(len(self.population)):
@@ -85,7 +100,9 @@ class GeneticAlgorithm:
             parent_2 = self._roulette_wheel_selection()
             # Create a new child and add it to the new population.
             child = self._reproduce(parent_1, parent_2)
-            # TODO: perform mutation
+            # Mutate child.
+            child = self._mutate(child)
+            # Add new child to population.
             new_population.append(child)
         self.population = new_population
 

@@ -8,5 +8,5 @@ if __name__ == "__main__":
     )  # Our search space (to tell the computer its possible options)
 
     g_a = GeneticAlgorithm(search_space)
-    g_a.initialize_population(100, len(phrase))
+    g_a.initialize_population(len(phrase))
     g_a.run(phrase, step=1)
