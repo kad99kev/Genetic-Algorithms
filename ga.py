@@ -15,7 +15,7 @@ class GeneticAlgorithm:
         self.population_size = population_size
         self.mutation_rate = mutation_rate
 
-    def initialize_population(self, chromosome_size):
+    def _initialize_population(self, chromosome_size):
         """
         Function to initialize the population with a given population size and a chromosome length.
 
@@ -126,16 +126,17 @@ class GeneticAlgorithm:
 
         return False
 
-    def _debug(self, step=1):
-        self.steps = 1
-        if self.steps % step == 0:
-            print(self.population)
-        self.steps += 1
-
-    def run(self, target, step=None):
+    def run(self, target, debug_steps=None):
+        # Initialise population.
+        self._initialize_population(len(target))
         self.target = target
+        self.iter_num = 1
         while not self._evaluate():
+            # Evaluate and evolve.
             self._evolve()
-            if step is not None:
-                self._debug(step)
-        print("Done")
+            # Perform debugging.
+            if debug_steps is not None:
+                if self.iter_num % debug_steps == 0:
+                    print(self.population)
+            self.iter_num += 1
+        return self.iter_num
